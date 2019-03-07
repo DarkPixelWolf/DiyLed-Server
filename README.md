@@ -29,9 +29,10 @@ That is it! Now you can start the server with
 ```
 python3 DiyLedServer.py
 ```
-The server will automatically create a configuration file called `config.json` and is reachable under `http://<server ip>:80/diyledstatus`.
+The server will automatically create a configuration file called `config.json` and is reachable under `http://<server_ip>:80/diyledstatus`.
 
 If you want the server to start at startup you have to create a startup script yourself, if you are using a Raspberry Pi you might use this as a template:
+
 Create a new service file
 ```
 sudo nano /etc/systemd/system/diyledserver.service
@@ -55,5 +56,7 @@ You might have to change the python path, working directory or filename accordin
 
 #### How does this work?
 The DiyLed server manages lights/devices, Alexa calls and App inputs by exchanging json strings via HTTP requests.
+
 Every DiyLed device sends a udp multicast packet upon startup which is received by the server which then asks for the lights state (e.g. brightness, color, mode etc) and saves the light name, ip and led count into the `config.json`.
+
 If an App or Alexa command wants to change a light, the server sends a http request to the corresponding light and tries to change its state. The light responds with an success or error packet (json string) which decides if the action was an success or not.
